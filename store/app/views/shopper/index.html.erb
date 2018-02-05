@@ -1,0 +1,54 @@
+<% if notice %>
+<p id="notice"><%= notice %></p>
+<% end %>
+<h1>Product Catalog</h1>
+<div class="search">
+  
+   <%= form_tag "/shopper/search" do |form| %>
+    <label for="search">Search By: </label>
+      <table>
+        <tr>
+          <td>
+          <label for="search">Name: </label>
+          </td>
+          <td>
+          <%= text_field_tag :name %>
+          </td>
+          <td>
+          <label for="search">Description: </label>
+          </td>
+          <td>
+          <%= text_field_tag :description %>
+          </td>
+        </tr>
+        <tr>
+          <td>
+          <label for="search">Price From: </label>
+          </td>
+          <td>
+          <%= text_field_tag :price_from %>
+          </td>
+          <td>
+          <label for="search">Price To: </label>
+          </td>
+          <td>
+          <%= text_field_tag :price_to %>
+          </td>
+        </tr>
+      </table>
+    <%= submit_tag  "Search" %>
+  <% end  %>
+</div>
+
+<% @products.each do |product| %>
+  <div class="entry">
+    <%= image_tag(product.image) %>
+    <h3><%= product.name %></h3>
+    <p><%= sanitize(product.description) %></p>
+    <div class="price_line">
+      <span class="price"><%= number_to_currency(product.price) %></span>
+      <%= button_to 'Add to Cart', lineitems_path(product_id: product), class: 'add_to_cart', remote:true%>
+      
+    </div>
+  </div>
+<% end %>

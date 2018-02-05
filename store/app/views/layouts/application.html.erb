@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Store</title>
+    <%= csrf_meta_tags %>
+
+    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+  </head>
+
+  <body class='<%= controller.controller_name%>'>
+    <div id="banner">
+    <%= image_tag("logo.png") %>
+    <%= @page_title || "Our Products" %>
+    
+    </div>
+    <div id="columns">
+      <div id="side">
+      <div id="cart">
+      <%if session[:user_id] %>
+        <h3> You are logged in as an Administrator</h3>
+      <%else%>
+         <%= render @cart %>
+      <% end %>
+      </div>
+        <ul>
+          <li><%= link_to 'Home', shopper_path %></li>
+          <li><%= link_to 'Question', question_path %></li>
+          <li><%= link_to 'News', news_path %></li>
+          <li><%= link_to 'contact', contact_path %></li>
+        </ul> 
+        <% if session[:user_id] %>
+        <ul>
+          <li><%= link_to 'Orders',   orders_path   %></li>
+          <li><%= link_to 'Products', products_path %></li>
+          <li><%= link_to 'Users',    users_path    %></li>
+        </ul>
+          <%= button_to 'Logout', logout_path, method: :delete   %>
+        <% else %>
+          <ul>
+          <%= button_to 'Login', login_path, method: :get   %>
+          </ul>
+        <% end %>
+      </div>
+      <div id="main">
+        <%= yield %>
+    </div>
+  </div>
+  </body>
+</html>
